@@ -1,0 +1,41 @@
+.location-map-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4rem 5%;
+  margin: 0 auto;
+}
+
+.location-map-section .location-info {
+  width: 30%;
+}
+
+
+
+.google-map {
+  height: 32rem;
+  width: 45%;
+}
+
+.google-map iframe {
+  height: 100%;
+  width: 100%;
+}
+
+@media screen and (max-width: 990px) {
+  .location-map-section {
+    flex-direction: column;
+    gap: 30px;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .location-map-section .location-info {
+    width: 100%;
+    text-align: center;
+  }
+  .google-map {
+    height: 20rem;
+    width: 90%;
+  }
+}

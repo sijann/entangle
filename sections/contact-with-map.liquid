@@ -1,0 +1,138 @@
+{{ 'contact-with-map.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+.section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "t:sections.location.name",
+  "settings": [
+    {
+        "type": "inline_richtext",
+        "id": "title",
+        "label": "t:sections.location.settings.title.label"
+      },
+    {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "background-1",
+        "label": "t:sections.all.colors.label"
+      },
+     {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 100,
+          "step": 4,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_top",
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 100,
+          "step": 4,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_bottom",
+          "default": 36
+        }    
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "t:sections.location.blocks.location_info.name",
+      "settings": [
+        {
+          "type": "text",
+          "label": "t:sections.location.blocks.location_info.settings.heading.label",
+          "id": "location_name",
+          "default": "Location"
+        },
+         {
+          "type": "richtext",
+          "label": "t:sections.location.blocks.location_info.settings.description.label",
+          "id": "location_info",
+          "default": "<p>abc\ndef\n</p>"
+        }
+      ]
+    },
+    {
+      "type": "google_map",
+      "name": "t:sections.location.blocks.google_map.name",
+      "settings": [
+        {
+          "type": "text",
+          "label": "t:sections.location.blocks.google_map.settings.url.label",
+          "id": "map_url",
+          "default": "https://maps.google.com/maps?q=Toronto,ON,Canada&output=embed"
+        }
+      ]
+    }
+  ],
+  "presets" : [
+    {
+      "name" : "t:sections.location.presets.name"
+    }
+  ]
+}
+{% endschema %}
+
+
+
+
+<div class="nerd-container section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+  <div class="nerd-page-width">
+  <div class="nerd--title-main">{{ section.settings.title | escape }}</div>
+
+<section class="location-map-section">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'location' -%}
+    {% assign locationInfo = section.blocks | where: 'type', 'location' | first %}
+  <div class="location-info">
+    {% if locationInfo != blank %}
+    <div class="nerd-title-small">{{ locationInfo.settings.location_name }}</div>
+    <div class="nerd-text">{{ locationInfo.settings.location_info }} </div>
+
+    {% else %}
+    <div class="nerd-title-small"> Heading </div> 
+    <div class="nerd-text">About Your Location </div>
+{% endif %}
+  </div>
+      {%- when 'google_map' -%}
+      {% assign googleMap = section.blocks | where: 'type', 'google_map' | first %}
+  <div class="google-map">
+    {% if googleMap != blank %}
+    <iframe src="{{ googleMap.settings.map_url }}"></iframe>
+    {% else %}
+    <iframe src="https://maps.google.com/maps?q=Toronto,ON,Canada&output=embed"></iframe>
+{% endif %}
+  </div>
+  {% endcase %}
+    {% else %}
+
+  <div class="location-info">
+    <div class="nerd-title-small"> Heading </div> 
+    <div class="nerd-text">About Your Location </div>
+  </div>
+   <div class="google-map">
+    <iframe src="https://maps.google.com/maps?q=Toronto,ON,Canada&output=embed"></iframe>
+  </div>
+  {% endfor %}
+</section>
+</div>
+</div>

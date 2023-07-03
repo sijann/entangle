@@ -1,0 +1,44 @@
+.custom-richtext .rich-text__blocks.center {
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.custom-richtext .rich-text__buttons {
+  max-width: 200px;
+}
+
+
+.custom-richtext .rich-text__heading {
+  text-transform: uppercase;
+}
+.custom-richtext .rich-text__buttons {
+  margin: 0;
+}
+
+.custom-richtext .rich-text__blocks {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .custom-richtext .rich-text__blocks.center {
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .custom-richtext .rich-text__wrapper {
+    width: 100%;
+  }
+
+  .custom-richtext .button.button--primary {
+    padding: 1rem;
+  }
+
+  .custom-richtext .rich-text__heading {
+    line-height: 1.5;
+  }
+}
+

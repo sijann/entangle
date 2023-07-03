@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "banner": {
+      "type": "nerd-collection-banner-main",
+      "settings": {
+      }
+    },
+    "product-grid": {
+      "type": "nerd-collection-product-grid-main",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid"
+  ]
+}

@@ -1,0 +1,32 @@
+.absolute_item {
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.absolute_item__right {
+  left: 50%;
+  /*   transform: translateX(-50%); */
+}
+
+.absolute_item .image-with-text__content {
+  background: none;
+}
+
+@media screen and (max-width: 750px) {
+  .absolute_item {
+    width: 100%;
+    left: 0;
+    
+  }
+  .absolute_item__left {
+    top: 25%;
+    transform: translateY(-50%);
+  }
+  .absolute_item__right {
+    top: 75%;
+    transform: translateY(-50%);
+  }
+}

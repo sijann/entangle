@@ -1,0 +1,155 @@
+{{ 'nerd-section-main-page.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 | append: 'px' }}
+    ;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 | append: 'px' }}
+    ;
+  }
+
+  .nerd-main-page-image {
+    opacity: {{ section.settings.image_opacity }}
+    ;
+  }
+
+  .nerd-main-page--head {
+    height: {{ section.settings.header_height | append: "px" }}
+    ;
+  }
+
+  .nerd--main-page-title{
+    margin: 0 !important;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | append: 'px'  }}
+      ;
+      padding-bottom: {{ section.settings.padding_bottom | append: 'px' }}
+      ;
+    }
+  }
+
+  .nerd--main-page-image-wrapper{
+    height: 200px;
+  }
+
+  .nerd--main-page-image-wrapper .nerd--main-page-image{
+    height: 200px;
+    width: 100%;
+    object-fit : cover;
+  }
+
+  .nerd--main-heading{
+    min-height: 80px;
+    position: relative;
+  }
+
+  @media screen and (max-width: 590px){
+    .nerd--main-heading{
+    min-height: 40px;
+  }
+    .nerd--main-page-image-wrapper{
+    height: 80px;
+  }
+  .nerd--main-page-image-wrapper .placeholder{
+    height: 80px;
+    width: 100%;
+    object-fit : cover;
+  }
+  
+  }
+
+{%- endstyle -%}
+<div class=" section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+<div class="nerd--main-heading nerd--relative ">
+  {% if section.settings.background_image %}
+  <div class="nerd--main-page-image-wrapper">
+    <img
+      src={{ section.settings.background_image | img_url: 'large' }}
+      class="nerd-main-page-image"
+      ,
+      height="{{ section.settings.background_image }}"
+      width="{{ section.settings.background_image }}"
+      loading="lazy" />
+
+    </div>
+  {% endif %}
+  <h1 class="nerd--title-main nerd--main-page-title nerd--absolute nerd--absolute-item-center">
+    {% if section.settings.alternative_title != blank %}
+      {{ section.settings.alternative_title }}
+    {% else %}
+      {{ page.title | escape }}
+    {% endif %}
+  </h1>
+</div>
+
+
+<div class="nerd-container text-center uppercase page-width--narrow section-{{ section.id }}-padding color-{{ section.settings.color_scheme }}">
+
+  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {{ page.content }}
+  </div>
+</div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "t:sections.main-page.name",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+       {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "t:sections.main-page.settings.image.label"
+
+      }, {
+        "type": "text",
+        "id": "alternative_title",
+        "label": "t:sections.main-page.settings.title.label",
+         "info": "t:sections.main-page.settings.title.info"
+      }, {
+        "type": "range",
+        "id": "image_opacity",
+        "label": "t:sections.main-page.settings.opacity.label",
+        "min": 0.1,
+        "max": 1,
+        "step": 0.1,
+        "default": 0.6
+
+      }, {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "t:sections.all.colors.label",
+        "default": "background-1"
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 36
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "nerd-login-main",
+      "custom_css": [
+
+      ],
+      "settings": {
+        "padding_top": 16,
+        "padding_bottom": 24,
+        "color_scheme": "scheme-ee1be600-79a7-42be-9d89-ab3fb98283b8"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

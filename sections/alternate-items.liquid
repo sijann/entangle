@@ -1,0 +1,126 @@
+{{ 'nerd-alternate-items.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .alternate--wrapper {
+    cursor: pointer;
+
+  }
+
+  .showme {
+    opacity: 0;
+    z-index: 100;
+    padding: 0 !important;
+  }
+
+  .showme,
+  .nerd--alternate-image {
+    transition: all 300ms;
+  }
+
+  .alternate--wrapper:hover .showme {
+    opacity: 1;
+  }
+
+  .alternate--wrapper:hover .nerd--alternate-image {
+    opacity: 0.4;
+  }
+</style>
+
+<div class="nerd-container color-{{ section.settings.color_scheme }}">
+  <div class="nerd-page-width">
+  <div class="nerd--title-main">{{ section.settings.title | escape }}</div>
+  <ul class="nerd-page-width nerd--list-alternate animate--slide-in">
+    {% for block in section.blocks %}
+      {% assign collection = block.settings.collection %}
+
+      <li class="nerd--alternate-item {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" 
+         {% if settings.animations_reveal_on_scroll %}
+        data-cascade
+        style="--animation-order: {{ forloop.index }};"
+      {% endif %} >
+        {% if collection %}
+          <div class="alternate--wrapper nerd--image-wrapper nerd--relative alternate--wrapper">
+            <a href={{ collection.url }}>
+              <div class="nerd--absolute-item-center showme button button--primary">{{ section.settings.button_label }}</div>
+            </a>
+            {% if collection.featured_image %}
+              {{
+                 collection.featured_image
+               | image_url: width: collection.featured_image.width
+               | image_tag: loading: 'lazy', class: 'nerd--alternate-image' }}
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: "nerd--alternate-image" }}
+            {% endif %}
+          </div>
+
+
+
+          <div class="alternate--title nerd--text-md">{{ collection.title }}</div>
+        {% else %}
+          {{ 'collection-1' | placeholder_svg_tag: "nerd--alternate-image" }}
+          <div class="alternate--title nerd-title-small">Title</div>
+        {% endif %}
+      </li>
+
+    {% else %}
+      {% for i in (1..4) %}
+        <li class="nerd--alternate-item {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ i }};"
+          {% endif %}
+        >
+          {{ 'collection-1' | placeholder_svg_tag: "nerd--alternate-image" }}
+          <div class="alternate--title nerd-title-small ">Title</div>
+        </li>
+      {% endfor %}
+    {% endfor %}
+
+  </ul>
+</div>
+</div>
+
+{% schema %}
+  {
+    "name": "t:sections.alternate_items.name",
+    "blocks": [
+      {
+        "name": "t:sections.alternate_items.blocks.name",
+        "type": "item",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "t:sections.alternate_items.blocks.settings.collection.label"
+          }
+        ]
+      }
+    ],
+    "settings": [
+      {
+        "type": "inline_richtext",
+        "id" : "title",
+        "default" : "Collections",
+        "label" : "t:sections.alternate_items.settings.title.label"
+
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "default": "Shop Now",
+        "label": "t:sections.alternate_items.settings.button.label"
+
+      }, {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "default": "background-1",
+        "label": "t:sections.all.colors.label"
+      }
+    ],
+    "presets": [
+      {
+        "name": "t:sections.alternate_items.presets.name"
+      }
+    ]
+  }
+{% endschema %}

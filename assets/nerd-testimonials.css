@@ -1,0 +1,33 @@
+.nerd-testimonial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    padding: 1rem;
+    border-radius: 10px;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+
+
+.nerd-testimonial--image-wrapper {
+    height: 100px;
+    width: 100px;
+
+}
+
+.nerd-testimonial--image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid;
+}
+
+@media screen and (max-width: 490px) {
+    .nerd-testimonial--image-wrapper {
+        height: 70px;
+    width: 70px;
+    }
+}

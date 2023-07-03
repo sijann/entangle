@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "nerd-activate-account-main",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

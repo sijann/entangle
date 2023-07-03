@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "nerd-404",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

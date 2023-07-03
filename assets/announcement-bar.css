@@ -1,0 +1,15 @@
+.nerd-announcement-bar{
+  position: relative;
+}
+
+.nerd-announcement-close{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2%;
+  z-index: 10000;
+}
+
+.nerd-announcement-close svg{
+  height: 10px;
+}

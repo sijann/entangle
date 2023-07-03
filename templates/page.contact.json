@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "main": {
+      "type": "nerd-page-main",
+      "settings": {
+        "alternative_title": "Contact Us",
+        "image_opacity": 0.2,
+        "color_scheme": "scheme-ee1be600-79a7-42be-9d89-ab3fb98283b8",
+        "padding_top": 0,
+        "padding_bottom": 16
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "blocks": {
+        "9e353462-3fcf-4a27-b840-0936505c8f26": {
+          "type": "contact",
+          "settings": {
+            "heading": "Heading",
+            "detail": "<p>Add your store details or store hours.<\/p>"
+          }
+        },
+        "c100af86-2c10-4c9f-84e0-64ed3f5f7de3": {
+          "type": "contact",
+          "settings": {
+            "heading": "Heading",
+            "detail": "<p>Add your store details or store hours.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "9e353462-3fcf-4a27-b840-0936505c8f26",
+        "c100af86-2c10-4c9f-84e0-64ed3f5f7de3"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "form"
+  ]
+}

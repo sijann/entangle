@@ -1,0 +1,38 @@
+{
+  "sections": {
+    "cart-items": {
+      "type": "nerd-cart-items-main",
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "color_scheme": "background-1"
+      }
+    },
+    "cart-footer": {
+      "type": "nerd-cart-footer-main",
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
+      "settings": {
+        "color_scheme": "background-1"
+      }
+    }
+  },
+  "order": [
+    "cart-items",
+    "cart-footer"
+  ]
+}

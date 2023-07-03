@@ -1,0 +1,117 @@
+.nerd--list-alternate {
+  padding: 0;
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+.nerd--list-alternate li {
+  position: relative;
+  padding-left: 10px;
+  list-style-type: none;
+
+}
+
+.nerd--alternate-image {
+  height: 220px;
+  width: auto;
+  object-fit: cover;
+  outline: 2px solid;
+  outline-offset: -10px;
+  margin-bottom: 10px;
+}
+
+.nerd--alternate-item {
+  display: flex;
+}
+
+.nerd--list-alternate li:nth-child(even) {
+  justify-content: flex-end;
+}
+
+.nerd--list-alternate li:nth-child(even) .alternate--title {
+  order: -1;
+  padding-right: 40px;
+  margin-right: -20px;
+}
+
+.nerd--list-alternate li:nth-child(odd) .alternate--title {
+  margin-left: -20px;
+  padding-left: 40px;
+}
+
+.alternate--title {
+  align-self: flex-end;
+  border-bottom: 2px solid;
+  margin-bottom: 35px;
+  text-transform: uppercase;
+  z-index: 1;
+
+}
+
+.nerd--alternate-item {
+  display: flex;
+
+}
+
+
+@media screen and (max-width: 480px) {
+  .nerd--list-alternate {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .nerd--alternate-item {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nerd--list-alternate li:nth-child(even) .alternate--title,
+  .nerd--list-alternate li:nth-child(odd) .alternate--title {
+    margin: 0;
+    padding: 0;
+    order: 1;
+    align-self: center;
+  }
+
+  .alternate--title {
+    align-self: center;
+    padding: 0 10px;
+
+  }
+
+  .nerd--alternate-item {
+    padding-bottom: 40px;
+  }
+
+}
+
+
+@media screen and (min-width: 480px) {
+  .nerd--list-alternate {
+    max-width: 95%;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .nerd--list-alternate {
+    max-width: 80%;
+  }
+
+  .nerd--alternate-image {
+    height: 240px;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .nerd--list-alternate {
+    max-width: 75%;
+  }
+
+  .nerd--alternate-image {
+    height: 290px;
+    width: auto;
+  }
+}

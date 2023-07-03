@@ -1,0 +1,201 @@
+{{ 'nerd-image-grid.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign count = section.blocks.size
+  if count == 1
+    assign grid_1_class = 'nerd--grid-1-desktop nerd--grid-1-tablet nerd--grid-1-mobile'
+  elsif count == 2
+    assign grid_1_class = 'nerd--grid-2-desktop nerd--grid-1-tablet'
+    assign grid_2_class = ' nerd--grid-1-desktop nerd--grid-1-tablet nerd--grid-1-mobile'
+  elsif count == 3
+    assign grid_1_class = 'nerd--grid-2-desktop nerd--grid-1-tablet'
+    assign grid_2_class = ' nerd--grid-1-desktop nerd--grid-2-tablet nerd--grid-1-mobile'
+  else
+    assign grid_1_class = 'nerd--grid-2-desktop nerd--grid-1-tablet'
+    assign grid_2_class = 'nerd--grid-row-2 nerd--grid-2-desktop nerd--grid-2-tablet nerd--grid-1-mobile'
+  endif
+%}
+
+
+<div class="nerd-container color-{{ section.settings.color_scheme }}">
+  <div class="nerd-page-width">
+    <div class="nerd--title-main">{{ section.settings.title | escape }}</div>
+    <div class="nerd--grid image-grid {{ grid_1_class }}">
+      <div class="nerd--relative image-wrapper first nerd--image-grid-height-full">
+        {% if count > 0 %}
+          {% assign first = section.blocks.first %}
+          {% assign content_position = first.settings.content_position | prepend: 'nerd--absolute-item-' %}
+          {% assign image = section.blocks.first.settings.image %}
+
+          {% capture styles %}
+          opacity: {{ first.settings.image_opacity }}%;
+        {% endcapture %}
+          {% if image %}
+            {{
+              image
+              | image_url: width: image.width
+              | image_tag: loading: 'lazy', class: 'nerd--image-grid-bigimage', style: styles
+            }}
+          {% else %}
+            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hw-full bg-cover nerd--image-grid-bigimage' }}
+          {% endif %}
+        {% else %}
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'hw-full bg-cover nerd--image-grid-bigimage' }}
+        {% endif %}
+        <div class="{{ content_position }} nerd--flex-col nerd--image-grid-absolute nerd--text-center">
+          <div class="nerd-title">
+            {{ first.settings.title }}
+          </div>
+          <div class="nerd-text">
+            {{ first.settings.text }}
+          </div>
+          {% if first.settings.button_label != blank %}
+            <a href="{{ first.settings.button_link }}" class="button button--primary">
+              {{ first.settings.button_label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="nerd--grid nerd--grid-item {{ grid_2_class }} ">
+        {% for block in section.blocks %}
+          {% if forloop.index > 1 %}
+            {% assign image = block.settings.image %}
+            {% capture styles %}
+            opacity : {{ block.settings.image_opacity }}%;
+          {% endcapture %}
+            {% capture classes %}
+            {% if count == 2 %}
+              nerd--image-grid-height-full
+            {% else %}
+              nerd--image-grid-height-half
+            {% endif %}
+          {% endcapture %}
+            {% liquid
+              assign content_position = 'nerd--absolute-item-center'
+              if block.settings.content_position == 'top'
+                assign content_position = 'nerd--absolute-item-top'
+              elsif block.settings.content_position == 'bottom'
+                assign content_position = 'nerd--absolute-item-bottom'
+              endif
+            %}
+            <div class="nerd--grid-image-wrapper {{ classes }} nerd--relative {% if count==4 and forloop.index==4 %} nerd--grid-colspan-2 {% endif %} {% if count==4 %} nerd--grid-colspan-2-mobile {% endif %}">
+              {% if image %}
+                {{ image | image_url: width: image.width | image_tag: loading: 'lazy', style: styles, class: classes }}
+
+              {% else %}
+                {{ 'hero-apparel-1' | placeholder_svg_tag: classes }}
+              {% endif %}
+              <div class="{{ content_position }} nerd--flex-col nerd--image-grid-absolute nerd--text-center">
+                <div class="nerd-title">
+                  {{ block.settings.title }}
+                </div>
+                <div class="nerd-text ">
+                  {{ block.settings.text }}
+                </div>
+                {% if block.settings.button_label != blank %}
+                  <a href="{{ block.settings.button_link }}" class="button button--primary">
+                    {{ block.settings.button_label }}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% else %}
+          {% for i in (1..4) %}
+            <div class="nerd--grid-item image-wrapper nerd--image-small">
+              {{ 'product-1' | placeholder_svg_tag: 'hw-full bg-cover' }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.image_grid.name",
+  "blocks": [
+    {
+      "name": "t:sections.image_grid.blocks.name",
+      "type": "image",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.image_grid.blocks.settings.image.label"
+        },
+        {
+          "type": "range",
+          "id": "image_opacity",
+          "min": 10,
+          "max": 100,
+          "step": 10,
+          "unit": "%",
+          "default": 90,
+          "label": "t:sections.image_grid.blocks.settings.opacity.label"
+        },
+        {
+          "type" : "select",
+          "id" : "content_position",
+          "default" : "center",
+          "label" : "t:sections.image_grid.blocks.settings.content.label",
+          "options" : [
+            {
+              "value" : "top",
+              "label" : "t:sections.image_grid.blocks.settings.content.options.top.label"
+            },
+            {
+              "value" : "center",
+              "label" : "t:sections.image_grid.blocks.settings.content.options.center.label"
+            },
+            {
+              "value" : "bottom",
+              "label" : "t:sections.image_grid.blocks.settings.content.options.bottom.label"
+            }
+          ]
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "t:sections.image_grid.blocks.settings.title.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.image_grid.blocks.settings.text.label"
+        }, {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.image_grid.blocks.settings.button.label"
+        },
+        {
+          "type": "text",
+          "id": "button_link",
+          "label": "t:sections.image_grid.blocks.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "t:sections.image_grid.settings.title.label"
+    },
+
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-2",
+      "label": "t:sections.all.colors.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.image_grid.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+.image-slider-new {
+  display: block;
+  height: 200px;
+}
+
+.image-slider-new svg,
+.image-slider-new img {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .image-slider-new {
+    height: 400px;
+  }
+}

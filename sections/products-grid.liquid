@@ -1,0 +1,260 @@
+{{ 'nerd-image-grid.css' | asset_url | stylesheet_tag }}
+{{ 'nerd-products-grid.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+{%- endstyle -%}
+
+{%- if section.settings.enable_quick_add -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{% liquid
+  assign count = section.blocks.size
+  if count == 1
+    assign grid_1_class = 'nerd--grid-1-desktop nerd--grid-1-tablet nerd--grid-1-mobile'
+  elsif count == 2
+    assign grid_1_class = 'nerd--grid-2-desktop nerd--grid-1-tablet'
+    assign grid_2_class = ' nerd--grid-1-desktop nerd--grid-1-tablet nerd--grid-1-mobile'
+  elsif count == 3
+    assign grid_1_class = 'nerd--grid-2-desktop nerd--grid-1-tablet'
+    assign grid_2_class = 'nerd--grid-row-2 nerd--grid-1-desktop nerd--grid-2-tablet nerd--grid-1-mobile'
+  else
+    assign grid_1_class = 'nerd--grid-2-desktop nerd--grid-1-tablet'
+    assign grid_2_class = 'nerd--grid-row-2 nerd--grid-2-desktop nerd--grid-2-tablet nerd--grid-1-mobile'
+  endif
+%}
+
+<div class="nerd-container section-{{ section.id }}-padding nerd--products-grid color-{{ section.settings.color_scheme }}">
+  <div class="nerd-page-width">
+    <div class="nerd--grid nerd--grid-gap-sm image-grid {{ grid_1_class }}">
+      {% assign first = section.blocks.first %}
+      {% assign content_position = first.settings.content_position | prepend: 'nerd--absolute-item-' %}
+      {% assign product = first.settings.product %}
+      {% assign image = product.featured_image %}
+
+      <a
+        href="{%- if product -%}{{ product.url }} {%- endif -%}"
+        class="color-{{ settings.card_color_scheme }} nerd--relative image-wrapper first nerd--image-grid-height-full nerd--showhim"
+      >
+        {% if count > 0 %}
+          {% capture styles %}
+            opacity: {{ first.settings.image_opacity }}%;
+          {% endcapture %}
+          {% if image %}
+            {{
+              image
+              | image_url: width: image.width
+              | image_tag: loading: 'lazy', class: 'nerd--image-grid-bigimage', style: styles
+            }}
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'hw-full bg-cover nerd--image-grid-bigimage' }}
+          {% endif %}
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'hw-full bg-cover nerd--image-grid-bigimage' }}
+        {% endif %}
+        {%- if product and product.collections.first.title != blank and section.settings.show_collection -%}
+          <div class="nerd--absolute-top-left nerd--product-grid-collection uppercase">
+            {{ product.collections.first.title }}
+          </div>
+        {% endif %}
+        {% if section.settings.show_title %}
+          <div class="nerd--products-grid--content-md nerd--absolute {{ content_position }} nerd--bg-transparent nerd--flex-col nerd--image-grid-absolute nerd--text-center nerd--product-grid-title">
+            <div class="nerd--products-grid-title-lg ">
+              {{ product.title }}
+            </div>
+          </div>
+        {% endif %}
+        {% if section.settings.enable_quick_add and product.title != blank %}
+          <div class="nerd--absolute-item-center nerd--showme">
+            {% render 'quick-add', card_product: product %}
+          </div>
+        {% endif %}
+      </a>
+
+      <div class="nerd--grid nerd--grid-gap-sm nerd--grid-item {{ grid_2_class }} ">
+        {% for block in section.blocks %}
+          {% if forloop.index > 1 %}
+            {% assign product = block.settings.product %}
+            {% assign image = product.featured_image %}
+            {% capture styles %}
+              opacity : {{ block.settings.image_opacity }}%;
+            {% endcapture %}
+            {% capture classes %}
+              nerd--image-grid--image
+              {% if count == 2 %}
+                nerd--image-grid-height-full
+              {% else %}
+                nerd--image-grid-height-half
+              {% endif %}
+            {% endcapture %}
+            {% liquid
+              assign content_position = 'nerd--absolute-item-center'
+              if block.settings.content_position == 'top'
+                assign content_position = 'nerd--absolute-item-top'
+              elsif block.settings.content_position == 'bottom'
+                assign content_position = 'nerd--absolute-item-bottom'
+              endif
+            %}
+
+            <a
+              href="{%- if product != blank -%}{{ product.url }} {%- else -%} # {%- endif -%}"
+              class="color-{{ settings.card_color_scheme }} nerd--grid-image-wrapper {{ classes }} nerd--relative {% if count==4 and forloop.index==4 %} nerd--grid-colspan-2 {% endif %} {% if count==4 %} nerd--grid-colspan-2-mobile {% endif %} nerd--showhim"
+            >
+              {% if image %}
+                {{ image | image_url: width: image.width | image_tag: loading: 'lazy', style: styles, class: classes }}
+
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: classes }}
+              {% endif %}
+              {% if section.settings.show_collection %}
+                <div class="nerd--absolute-top-left uppercase {% if count==2 and forloop.index==2 -%} nerd--product-grid-collection {%- else -%} nerd--product-grid-collection-sm {%- endif -%}">
+                  {%- if product != blank -%}
+                    {{ product.collections.first.title }}
+                  {% else %}
+                    Collection
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if section.settings.show_title %}
+                <div class="nerd--products-grid--content-md {{ content_position }} nerd--flex-col nerd--bg-transparent nerd--image-grid-absolute nerd--text-center">
+                  <div class="{%- if count==2 and forloop.index==2 -%} nerd--products-grid-title-lg {%- else -%}nerd--products-grid-title-md{%- endif -%}">
+                    {{ product.title }}
+                  </div>
+                </div>
+              {% endif %}
+              {% if section.settings.enable_quick_add and product.title != blank %}
+                <div class="nerd--absolute-item-center nerd--showme">
+                  {% render 'quick-add', card_product: product %}
+                </div>
+              {% endif %}
+            </a>
+          {% endif %}
+        {% else %}
+          {% for i in (1..4) %}
+            <div class="color-{{ settings.card_color_scheme }} nerd--image-grid-height-half nerd--grid-item image-wrapper nerd--image-small nerd--relative">
+              {{ 'product-1' | placeholder_svg_tag: 'nerd--image-grid--image nerd--image-grid-height-half' }}
+              <div class="nerd--absolute-top-left uppercase {% if count == 2 and forloop.index == 2 -%} nerd--product-grid-collection {%- else -%} nerd--product-grid-collection-sm {%- endif -%}">
+                Collection
+              </div>
+              {% if section.settings.show_title %}
+                <div class="nerd--products-grid--content-md nerd--absolute-item-bottom nerd--flex-col nerd--bg-transparent nerd--image-grid-absolute nerd--text-center">
+                  <div class="{%- if count == 2 and forloop.index == 2 -%} nerd--products-grid-title-lg {%- else -%}nerd--products-grid-title-md{%- endif -%}">
+                    Product Name
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.products_grid.name",
+  "blocks": [
+    {
+      "name": "t:sections.products_grid.blocks.name",
+      "type": "product",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.products_grid.blocks.settings.product.label"
+        }, {
+          "type": "range",
+          "id": "image_opacity",
+          "min": 10,
+          "max": 100,
+          "step": 10,
+          "unit": "%",
+          "default": 100,
+          "label": "t:sections.products_grid.blocks.settings.opacity.label"
+        }, {
+          "type": "select",
+          "id": "content_position",
+          "default": "bottom",
+          "label": "t:sections.products_grid.blocks.settings.content.label",
+          "options": [
+            {
+              "value": "top",
+              "label": "t:sections.products_grid.blocks.settings.content.options.top.label"
+            }, {
+              "value": "center",
+              "label": "t:sections.products_grid.blocks.settings.content.options.center.label"
+            }, {
+              "value": "bottom",
+              "label": "t:sections.products_grid.blocks.settings.content.options.bottom.label"
+            }
+          ]
+        }
+
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.products_grid.settings.show_title.label",
+      "default": true
+    }, {
+      "type": "checkbox",
+      "id": "show_collection",
+      "label": "t:sections.products_grid.settings.show_collection.label",
+      "default": true
+    }, {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:sections.products_grid.settings.quick_add.label"
+    }, {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "background-1  ",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.products_grid.presets.name"
+    }
+  ]
+}
+{% endschema %}

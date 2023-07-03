@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "nerd-order-main",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
