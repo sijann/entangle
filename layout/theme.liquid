@@ -32,7 +32,7 @@
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'flickity.pkgd.min.js' | asset_url }}" defer="defer" ></script>
+    <script src="{{ 'flickity.pkgd.min.js' | asset_url }}" defer="defer"></script>
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
@@ -259,6 +259,7 @@
 
     {{ 'custom-style.css' | asset_url | stylesheet_tag }}
     {{ 'nerd-base.css' | asset_url | stylesheet_tag }}
+    {{ 'en-output.css' | asset_url | stylesheet_tag }}
 
     <script>
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
@@ -267,12 +268,8 @@
       }
     </script>
 
-
-  <link rel="stylesheet" type="text/css" href="{{ 'flickity.min.css' | asset_url }}">
-  
-  
+    <link rel="stylesheet" type="text/css" href="{{ 'flickity.min.css' | asset_url }}">
   </head>
-  
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">

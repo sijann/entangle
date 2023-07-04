@@ -1,3 +1,52 @@
+{% assign padding = section.settings.padding %}
+{% assign slide_duration = section.settings.slide_duration | plus: 0 | times: 1000 %}
+{% assign font_size = section.settings.font_size %}
+
+<style>
+  .en-announcement-bar {
+    padding-top: {{ padding }}px;
+    padding-bottom: {{ padding }}px;
+    font-size: {{ font_size }}px;
+    position: relative;
+  }
+
+  .flickity-enabled:focus, .flickity-enabled:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .announcement-bar--slide{
+    width: 100%;
+    text-align: center;
+  }
+  .close-icon-announcement{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    cursor: pointer;
+  }
+</style>
+<div class="en-announcement-bar color-{{ section.settings.color_scheme }}">
+  {% if section.settings.allow_close_icon %}
+    <div class="close-icon-announcement">
+      {% render 'en-icon-close' %}
+    </div>
+  {% endif %}
+  <div
+    class="en-announcement-bar-slider"
+  >
+    {% for block in section.blocks %}
+      <div
+        class="announcement-bar--slide"
+        {{ block.shopify_attributes }}
+      >
+        {{ block.settings.announcement_text }}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% schema %}
 {
   "name": "Announcement Bar",
@@ -39,15 +88,21 @@
       "default": 16
     },
     {
+      "type": "checkbox",
+      "id": "allow_close_icon",
+      "default": false,
+      "label": "Display close icon"
+    },
+    {
       "type": "color_scheme",
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
-      "default": "background-1"
+      "default": "background-2"
     }
   ],
   "blocks": [
     {
-      "name": "Announcement Bar",
+      "name": "Text",
       "type": "announcement",
       "settings": [
         {
@@ -62,29 +117,35 @@
 }
 {% endschema %}
 
-{% assign padding = section.settings.padding %}
-{% assign slide_duration = section.settings.slide_duration | plus: 0 | times: 1000 %}
-{% assign font_size = section.settings.font_size %}
+<script>
+    let flickityAnnouncementBar;
+    function updateAnnouncementBar() {
+      var elem = document.querySelector('.en-announcement-bar-slider');
+      var flkty = new Flickity(elem, {
+        cellAlign: "center",
+        contain: true,
+        groupCells: 1,
+        pageDots: false,
+        wrapAround: true,
+        prevNextButtons: false,
+        autoPlay:  {{ slide_duration }}
+      });
+    }
 
-<style>
-  .en-announcement-bar {
-    padding-left: {{ padding }}px;
-    padding-right: {{ padding }}px;
-    font-size: {{ font_size }}px;
-  }
-  .announcement-bar--slide{
-    width: 100%;
-    text-align: center;
-  }
-</style>
+  window.addEventListener('load', updateAnnouncementBar);
+  document.addEventListener('shopify:block:select', updateAnnouncementBar);
 
-<div
-  class="en-announcement-bar color-{{ section.settings.color_scheme }}"
-  data-flickity='{ "cellAlign": "center", "contain": true, "groupCells": 1,"pageDots": false, "wrapAround": true, "prevNextButtons": false, "autoPlay": {{ slide_duration }} }'
->
-  {% for block in section.blocks %}
-    <div class="announcement-bar--slide">
-      {{ block.settings.announcement_text }}
-    </div>
-  {% endfor %}
-</div>
+  document.addEventListener('shopify:section:reorder', () => updateAnnouncementBar());
+
+  document.addEventListener('shopify:section:select', () => updateAnnouncementBar());
+
+  document.addEventListener('shopify:section:deselect', () => updateAnnouncementBar());
+
+  document.addEventListener('shopify:inspector:activate', () => updateAnnouncementBar());
+
+  document.addEventListener('shopify:inspector:deactivate', () => updateAnnouncementBar());
+
+  document.querySelector('.close-icon-announcement').addEventListener("click", ()=>{
+    document.querySelector('.en-announcement-bar').style.display = "none";
+  })
+</script>
