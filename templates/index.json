@@ -1,6 +1,10 @@
 {
   "sections": {
+    "image_banner" : {
+      "type": "image-text-overlay"
+    }
   },
   "order": [
+    "image_banner"
   ]
 }

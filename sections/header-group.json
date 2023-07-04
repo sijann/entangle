@@ -24,7 +24,7 @@
       }
     },
     "header": {
-      "type": "header-new"
+      "type": "header"
     }
   },
   "order": [
