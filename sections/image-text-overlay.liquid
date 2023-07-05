@@ -1,6 +1,108 @@
+{% liquid
+  assign bgImage = section.settings.background_image
+  assign overlayColor = section.settings.overlay_color
+  assign overlayOpacity = section.settings.overlay_opacity
+  assign heading = section.settings.heading
+  if heading == blank
+    assign heading = 'Talk about your brand'
+  endif
+  assign textContent = section.settings.text_content
+  if textContent == blank
+    assign textContent = 'Give some information about your store, products or services.'
+  endif
+  assign buttonText = section.settings.button_text
+  assign buttonURL = section.settings.button_url
+  assign buttonBackground = section.settings.button_bg_color
+  assign buttonTextColor = section.settings.button_text_color
+  assign contentPosition = section.settings.content_position
+  assign alignment = section.settings.alignment
+  assign textColor = section.settings.text_color
+%}
+
+<section class="en-relative en-w-full">
+  <div class="ent-image-overlay-container en-relative en-w-full en-pb-[55%] ">
+    {% if bgImage %}
+      <div
+        class="ent-image-overlay en-absolute en-top-0 en-left-0 en-w-full en-h-full en-bg-cover en-bg-center en-bg-no-repeat"
+        style="background-image: url({{ bgImage | img_url: 'master' }});"
+      >
+        '
+      </div>
+    {% else %}
+      {{
+        'lifestyle-1'
+        | placeholder_svg_tag: 'ent-image-overlay-svg en-absolute en-top-0 en-left-0 en-w-full en-h-full en-bg-cover en-bg-center en-bg-no-repeat'
+      }}
+    {% endif %}
+    <div class="ent-content-wrapper en-absolute en-w-full lg:en-w-1/2 {{ contentPosition }}">
+      <h2 class="en-block en-mt-4 lg:en-text-[4rem]" style="color: {{ textColor }} ">{{ heading }}</h2>
+      <p class="en-block en-mt-4 lg:en-text-[2.5rem]" style="color: {{ textColor }}">
+        {{ textContent }}
+      </p>
+      {% if buttonText %}
+        <a href="{{ buttonURL }}" class="ent-overlay-button ent-button en-mt-4">
+          {{- buttonText -}}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+    .ent-image-overlay-container {
+      {% if bgImage %}
+      background-color: {{ overlayColor }};
+  {% endif %}
+    }
+
+    .ent-image-overlay {
+      color: {{ overlayColor }};
+      opacity: {{ overlayOpacity }};
+    }
+    .ent-image-overlay-svg {
+      opacity: {{ overlayOpacity }};
+    }
+
+    .ent-content-wrapper {
+      text-align: {{ alignment }};
+    }
+
+    .ent-overlay-button{
+      background-color: {{ buttonBackground }};
+      color: {{ buttonTextColor }};
+    }
+
+    .ent-content-wrapper.top-left { top: 10%; left: 10%; }
+    .ent-content-wrapper.top-center { top: 10%; left: 50%; transform: translate(-50%, 0); }
+    .ent-content-wrapper.top-right { top: 10%; right: 10%; }
+    .ent-content-wrapper.center-left { top: 50%; left: 10%; transform: translate(0, -50%); }
+    .ent-content-wrapper.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ent-content-wrapper.center-right { top: 50%; right: 10%; transform: translate(0, -50%); }
+    .ent-content-wrapper.bottom-left { bottom: 10%; left: 10%; }
+    .ent-content-wrapper.bottom-center { bottom: 10%; left: 50%; transform: translate(-50%, 0); }
+    .ent-content-wrapper.bottom-right { bottom: 10%; right: 10%; }
+
+    .ent-image-overlay-section h2, .ent-image-overlay-section p {
+      margin: 0;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 749px){
+      .ent-image-overlay-container {
+      min-height: 36rem;
+    }
+    .ent-content-wrapper{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }
+    }
+</style>
+
 {% schema %}
 {
-  "name": "Image Overlay Section",
+  "name": "Image with text overlay",
   "settings": [
     {
       "type": "image_picker",
@@ -20,7 +122,7 @@
       "min": 0,
       "max": 1,
       "step": 0.1,
-      "default": 0.2
+      "default": 1
     },
     {
       "type": "text",
@@ -31,6 +133,29 @@
       "type": "textarea",
       "id": "text_content",
       "label": "Text Content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background olor",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#000000"
     },
     {
       "type": "select",
@@ -50,6 +175,26 @@
       "default": "center"
     },
     {
+      "type": "select",
+      "id": "alignment",
+      "default": "center",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
       "type": "color",
       "id": "text_color",
       "label": "Text Color",
@@ -58,97 +203,8 @@
   ],
   "presets": [
     {
-      "name": "Image with text overlayy"
+      "name": "Image with text overlay"
     }
   ]
 }
 {% endschema %}
-
-{% assign bgImage = section.settings.background_image %}
-{% assign overlayColor = section.settings.overlay_color %}
-{% assign overlayOpacity = section.settings.overlay_opacity %}
-{% assign heading = section.settings.heading %}
-{% assign textContent = section.settings.text_content %}
-{% assign contentPosition = section.settings.content_position %}
-{% assign textColor = section.settings.text_color %}
-
-<section class="en-image-overlay-section">
-  <div class="en-image-overlay-container">
-    {% if bgImage %}
-      <div class="en-image-overlay" style="background-image: url({{ bgImage | img_url: 'master' }});">'</div>
-    {% else %}
-      {{ 'hero-apparel-1' | placeholder_svg_tag: 'en-image-overlay-svg' }}
-    {% endif %}
-    <div class="en-content-wrapper {{ contentPosition }}">
-      <h2 class="lg:en-text-[4rem]" style="color: {{ textColor }}">{{ heading }}</h2>
-      <p class="lg:en-text-[2.5rem]" style="color: {{ textColor }}">{{ textContent }}</p>
-    </div>
-  </div>
-</section>
-
-<style>
-    .en-image-overlay-section {
-      position: relative;
-      width: 100%;
-    }
-
-    .en-image-overlay-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 75%;
-      {% if bgImage %}
-      background-color: {{ overlayColor }};
-
-  {% endif %}
-    }
-
-    .en-image-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: {{ overlayColor }};
-      opacity: {{ overlayOpacity }};
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    .en-image-overlay-svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: {{ overlayOpacity }};
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    .en-content-wrapper {
-      position: absolute;
-      text-align: center;
-    }
-
-    .en-content-wrapper.top-left { top: 10%; left: 10%; }
-    .en-content-wrapper.top-center { top: 10%; left: 50%; transform: translate(-50%, 0); }
-    .en-content-wrapper.top-right { top: 10%; right: 10%; }
-    .en-content-wrapper.center-left { top: 50%; left: 10%; transform: translate(0, -50%); }
-    .en-content-wrapper.center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
-    .en-content-wrapper.center-right { top: 50%; right: 10%; transform: translate(0, -50%); }
-    .en-content-wrapper.bottom-left { bottom: 10%; left: 10%; }
-    .en-content-wrapper.bottom-center { bottom: 10%; left: 50%; transform: translate(-50%, 0); }
-    .en-content-wrapper.bottom-right { bottom: 10%; right: 10%; }
-
-    .en-image-overlay-section h2, .en-image-overlay-section p {
-      margin: 0;
-      padding: 0;
-    }
-
-    @media screen and (max-width: 749px){
-      .en-image-overlay-container {
-      min-height: 36rem;
-    }
-    }
-</style>

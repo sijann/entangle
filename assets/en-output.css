@@ -6,32 +6,20 @@
   position: relative
 }
 
-.en-top-full {
-  top: 100%
-}
-
-.en-left-full {
-  left: 100%
+.en-right-0 {
+  right: 0px
 }
 
 .en-top-0 {
   top: 0px
 }
 
+.en-top-full {
+  top: 100%
+}
+
 .en-left-0 {
   left: 0px
-}
-
-.en-right-full {
-  right: 100%
-}
-
-.en-right-\[100\%\] {
-  right: 100%
-}
-
-.en-right-0 {
-  right: 0px
 }
 
 .en-z-10 {
@@ -51,6 +39,26 @@
   margin-left: auto
 }
 
+.en-mt-10 {
+  margin-top: 2.5rem
+}
+
+.en-mt-4 {
+  margin-top: 1rem
+}
+
+.en-mb-4 {
+  margin-bottom: 1rem
+}
+
+.en-block {
+  display: block
+}
+
+.en-inline-block {
+  display: inline-block
+}
+
 .en-flex {
   display: flex
 }
@@ -63,24 +71,24 @@
   height: 2.5rem
 }
 
-.en-h-full {
-  height: 100%
-}
-
 .en-h-6 {
   height: 1.5rem
+}
+
+.en-h-full {
+  height: 100%
 }
 
 .en-w-10 {
   width: 2.5rem
 }
 
-.en-w-full {
-  width: 100%
-}
-
 .en-w-6 {
   width: 1.5rem
+}
+
+.en-w-full {
+  width: 100%
 }
 
 .en-max-w-full {
@@ -127,9 +135,37 @@
   border-radius: 9999px
 }
 
-.en-bg-black {
+.en-rounded {
+  border-radius: 0.25rem
+}
+
+.en-border-2 {
+  border-width: 2px
+}
+
+.en-border-b {
+  border-bottom-width: 1px
+}
+
+.en-border-b-2 {
+  border-bottom-width: 2px
+}
+
+.en-bg-blue-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity))
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity))
+}
+
+.en-bg-cover {
+  background-size: cover
+}
+
+.en-bg-center {
+  background-position: center
+}
+
+.en-bg-no-repeat {
+  background-repeat: no-repeat
 }
 
 .en-p-4 {
@@ -141,17 +177,35 @@
   padding-right: 0.5rem
 }
 
-.en-py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem
+.en-px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+.en-py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem
 }
 
 .en-pb-4 {
   padding-bottom: 1rem
 }
 
+.en-pb-\[55\%\] {
+  padding-bottom: 55%
+}
+
+.en-text-center {
+  text-align: center
+}
+
 .en-text-\[3rem\] {
   font-size: 3rem
+}
+
+.en-text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem
 }
 
 .en-text-3xl {
@@ -164,12 +218,17 @@
   line-height: 1.75rem
 }
 
-.en-text-\[4rem\] {
-  font-size: 4rem
+.en-font-bold {
+  font-weight: 700
 }
 
 .en-uppercase {
   text-transform: uppercase
+}
+
+.en-text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
 @media (min-width: 768px) {
@@ -183,34 +242,15 @@
 }
 
 @media (min-width: 1024px) {
-  .lg\:en-text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem
-  }
-
-  .lg\:en-text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem
-  }
-
-  .lg\:en-text-6xl {
-    font-size: 3.75rem;
-    line-height: 1
-  }
-
-  .lg\:en-text-\[4rem\] {
-    font-size: 4rem
-  }
-
-  .lg\:en-text-\[3rem\] {
-    font-size: 3rem
-  }
-
-  .lg\:en-text-\[3\.5rem\] {
-    font-size: 3.5rem
+  .lg\:en-w-1\/2 {
+    width: 50%
   }
 
   .lg\:en-text-\[2\.5rem\] {
     font-size: 2.5rem
+  }
+
+  .lg\:en-text-\[4rem\] {
+    font-size: 4rem
   }
 }

@@ -2,9 +2,13 @@
   "sections": {
     "image_banner" : {
       "type": "image-text-overlay"
+    },
+    "faq":{
+      "type": "faq"
     }
   },
   "order": [
-    "image_banner"
+    "image_banner",
+    "faq"
   ]
 }
