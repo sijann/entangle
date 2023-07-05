@@ -145,7 +145,7 @@
 
   document.addEventListener('shopify:inspector:deactivate', () => updateAnnouncementBar());
 
-  document.querySelector('.close-icon-announcement').addEventListener("click", ()=>{
+  document.querySelector('.close-icon-announcement')?.addEventListener("click", ()=>{
     document.querySelector('.en-announcement-bar').style.display = "none";
   })
 </script>

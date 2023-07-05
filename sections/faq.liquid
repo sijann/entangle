@@ -3,6 +3,8 @@
     margin-bottom: 20px;
     background-color: {{ section.settings.background_color }};
     color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding }}px;
+    padding-bottom: {{ section.settings.padding }}px;
   }
 
   .accordion__item {
@@ -127,6 +129,17 @@
       "id": "text_color",
       "label": "Text Color",
       "default": "#333333"
+    },
+    {
+      "type": "range",
+      "default": 20,
+      "min": 0,
+      "max": 50,
+      "id": "padding",
+      "label": "Padding",
+      "info": "Padding top and bottom",
+      "step": 1,
+      "unit": "px"
     }
   ],
   "blocks": [
