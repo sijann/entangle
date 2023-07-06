@@ -5,10 +5,14 @@
     },
     "faq":{
       "type": "faq"
+    },
+    "featured_collection" : {
+      "type": "featured-collection"
     }
   },
   "order": [
     "slideshow",
-    "faq"
+    "faq",
+    "featured_collection"
   ]
 }

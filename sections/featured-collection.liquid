@@ -58,8 +58,7 @@
       >
         {%- for product in section.settings.collection.products limit: products_to_display -%}
           <li
-            id="Slide-{{ section.id }}-{{ forloop.index }}"
-            class="en-rounded-md {%- if has_slider %} w-full md:w-1/2 lg:w-[33%] xl:w-[25%] {% endif %}"
+            class="en-rounded-md {%- if has_slider %} en-w-full md:en-w-1/2 lg:en-w-[33%] xl:en-w-[25%] {% endif %}"
           >
             {% render 'card-product',
               card_product: product,
@@ -69,19 +68,19 @@
               show_vendor: section.settings.show_vendor,
               show_rating: section.settings.show_rating,
               show_quick_add: section.settings.enable_quick_add,
-              section_id: section.id
+              section_id: section.id,
+              color_scheme: section.settings.card_color_scheme
             %}
           </li>
         {%- else -%}
           {%- for i in (1..4) -%}
             <li
-              class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-              {% if settings.animations_reveal_on_scroll %}
-                data-cascade
-                style="--animation-order: {{ forloop.index }};"
-              {% endif %}
+              class="en-rounded-md {%- if has_slider %} en-w-full md:en-w-1/2 lg:en-w-[33%] xl:en-w-[25%] {% endif %}"
             >
-              {% render 'card-product-empty', show_vendor: section.settings.show_vendor %}
+              {% render 'card-product-empty',
+                show_vendor: section.settings.show_vendor,
+                color_scheme: section.settings.card_color_scheme
+              %}
             </li>
           {%- endfor -%}
         {%- endfor -%}
@@ -93,18 +92,15 @@
 <script>
   function updateCollectionSlideshow() {
     var elem = document.querySelector('.ent-featured-collection-slideshow');
-    if(elem){
-    var flkty = new Flickity(elem, {
-      cellAlign: 'center',
-      contain: true,
-      pageDots: false,
-      wrapAround: true,
-      prevNextButtons: true,
-      autoPlay: {{ section.settings.slide_duration | plus: 0 | times: 1000 }},
-    });
+    if (elem) {
+      var flkty = new Flickity(elem, {
+        cellAlign: 'center',
+        contain: true,
+        pageDots: false,
+        prevNextButtons: true,
+      });
+    }
   }
-  }
-
 
   window.addEventListener('load', updateCollectionSlideshow);
   document.addEventListener('shopify:block:select', updateCollectionSlideshow);
@@ -266,6 +262,13 @@
           "label": "t:sections.featured-collection.settings.columns_mobile.options__2.label"
         }
       ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Card color scheme",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "background-4"
     },
     {
       "type": "header",

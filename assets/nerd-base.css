@@ -412,3 +412,22 @@ a{
   font-size: 2rem;
 }
 }
+
+.ent-card-image-wrapper{
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.ent-card-image-wrapper:before{
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.ent-card-image{
+height: 100%;
+width: 100%;
+position: absolute;
+left: 50%;
+top: 0;
+transform: translateX(-50%);
+}
