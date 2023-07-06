@@ -1,14 +1,14 @@
 {
   "sections": {
-    "image_banner" : {
-      "type": "image-text-overlay"
+    "slideshow" : {
+      "type": "slideshow"
     },
     "faq":{
       "type": "faq"
     }
   },
   "order": [
-    "image_banner",
+    "slideshow",
     "faq"
   ]
 }

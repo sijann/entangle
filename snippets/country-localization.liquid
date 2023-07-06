@@ -8,7 +8,7 @@
 <div class="disclosure">
   <button
     type="button"
-    class="disclosure__button localization-form__select localization-selector link link--text caption-large"
+    class="en-px-4 en-py-4 en-font-[inherit]"
     aria-expanded="false"
     aria-controls="{{ localPosition }}List"
     aria-describedby="{{ localPosition }}Label"
@@ -17,7 +17,6 @@
       {{- localization.country.currency.iso_code }}
       {{ localization.country.currency.symbol }} | {{ localization.country.name -}}
     </span>
-    {% render 'icon-caret' %}
   </button>
   <div class="disclosure__list-wrapper" hidden>
     <ul id="{{ localPosition }}List" role="list" class="disclosure__list list-unstyled">

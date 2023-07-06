@@ -35,6 +35,11 @@
   margin-right: auto
 }
 
+.en-my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem
+}
+
 .en-mb-4 {
   margin-bottom: 1rem
 }
@@ -47,12 +52,24 @@
   margin-top: 1rem
 }
 
+.en-mt-8 {
+  margin-top: 2rem
+}
+
 .en-block {
   display: block
 }
 
+.en-inline-block {
+  display: inline-block
+}
+
 .en-flex {
   display: flex
+}
+
+.en-grid {
+  display: grid
 }
 
 .en-hidden {
@@ -83,12 +100,28 @@
   width: 100%
 }
 
+.en-max-w-\[40rem\] {
+  max-width: 40rem
+}
+
 .en-max-w-full {
   max-width: 100%
 }
 
 .en-cursor-pointer {
   cursor: pointer
+}
+
+.en-list-none {
+  list-style-type: none
+}
+
+.en-grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr))
+}
+
+.en-flex-col {
+  flex-direction: column
 }
 
 .en-flex-wrap {
@@ -107,6 +140,10 @@
   justify-content: space-between
 }
 
+.en-justify-around {
+  justify-content: space-around
+}
+
 .en-gap-10 {
   gap: 2.5rem
 }
@@ -123,8 +160,29 @@
   gap: 1rem
 }
 
+.en-gap-8 {
+  gap: 2rem
+}
+
+.en-gap-y-8 {
+  row-gap: 2rem
+}
+
+.en-gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem
+}
+
+.en-gap-y-6 {
+  row-gap: 1.5rem
+}
+
 .en-rounded-full {
   border-radius: 9999px
+}
+
+.en-rounded-md {
+  border-radius: 0.375rem
 }
 
 .en-border-2 {
@@ -147,6 +205,10 @@
   background-repeat: no-repeat
 }
 
+.en-p-0 {
+  padding: 0px
+}
+
 .en-p-4 {
   padding: 1rem
 }
@@ -154,6 +216,16 @@
 .en-px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem
+}
+
+.en-px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+.en-py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem
 }
 
 .en-pb-4 {
@@ -168,16 +240,12 @@
   text-align: center
 }
 
+.en-font-\[inherit\] {
+  font-family: inherit
+}
+
 .en-text-\[3rem\] {
   font-size: 3rem
-}
-
-.en-text-\[2\.7rem\] {
-  font-size: 2.7rem
-}
-
-.en-text-\[2\.5rem\] {
-  font-size: 2.5rem
 }
 
 .en-font-bold {
@@ -188,6 +256,10 @@
   text-transform: uppercase
 }
 
+.en-underline {
+  text-decoration-line: underline
+}
+
 @media (min-width: 768px) {
   .md\:en-flex {
     display: flex
@@ -195,6 +267,27 @@
 
   .md\:en-hidden {
     display: none
+  }
+
+  .md\:en-grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+
+  .md\:en-flex-row {
+    flex-direction: row
+  }
+
+  .md\:en-items-center {
+    align-items: center
+  }
+
+  .md\:en-gap-8 {
+    gap: 2rem
+  }
+
+  .md\:en-gap-x-4 {
+    -moz-column-gap: 1rem;
+         column-gap: 1rem
   }
 
   .md\:en-text-\[2\.5rem\] {
@@ -211,11 +304,31 @@
     width: 50%
   }
 
+  .lg\:en-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+  }
+
+  .lg\:en-gap-x-6 {
+    -moz-column-gap: 1.5rem;
+         column-gap: 1.5rem
+  }
+
   .lg\:en-text-\[2\.5rem\] {
     font-size: 2.5rem
   }
 
   .lg\:en-text-\[4rem\] {
     font-size: 4rem
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:en-grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+
+  .xl\:en-gap-x-6 {
+    -moz-column-gap: 1.5rem;
+         column-gap: 1.5rem
   }
 }

@@ -12,28 +12,20 @@
             "menu": "footer"
           }
         },
-        "1e4e99e5-725e-469f-92eb-eba55fa3c334": {
+        "text": {
           "type": "text",
           "settings": {
             "heading": "Heading",
             "subtext": "<p>Share some information about your store<\/p>"
           }
-        },
-        "78fa2509-eb3a-4ed3-9dca-cd155ec640c5": {
-          "type": "image",
-          "settings": {
-            "image_width": 100,
-            "alignment": "center"
-          }
         }
       },
       "block_order": [
         "footer-0",
-        "1e4e99e5-725e-469f-92eb-eba55fa3c334",
-        "78fa2509-eb3a-4ed3-9dca-cd155ec640c5"
+        "text"
       ],
       "settings": {
-        "color_scheme": "scheme-ee1be600-79a7-42be-9d89-ab3fb98283b8",
+        "color_scheme": "scheme-background-3",
         "newsletter_enable": true,
         "newsletter_heading": "Join our newsletter",
         "enable_follow_on_shop": true,

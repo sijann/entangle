@@ -1,6 +1,9 @@
 <style>
+  .section-{{ section.id }}{
+    padding-top: {{ section.settings.padding }}px;
+    padding-bottom: {{ section.settings.padding }}px;
+  }
   .accordion {
-    margin-bottom: 20px;
     background-color: {{ section.settings.background_color }};
     color: {{ section.settings.text_color }};
     padding-top: {{ section.settings.padding }}px;
@@ -49,8 +52,8 @@
   }
 </style>
 
-<div class="accordion nerd-container">
-  <div class="nerd-page-width">
+<div class="accordion nerd-container color-{{ section.settings.color_scheme }} ">
+  <div class="nerd-page-width section-{{ section.id }} ">
     <div class="ent-title en-text-center en-mb-4">
       {{ section.settings.title }}
     </div>
@@ -119,10 +122,10 @@
       "label": "Title"
     },
     {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#ffffff"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "background-3"
     },
     {
       "type": "color",
